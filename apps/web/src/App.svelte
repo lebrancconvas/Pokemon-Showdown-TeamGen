@@ -1,9 +1,20 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
+  import axios from 'axios';
   let searchName = "";
+  let pokemonData: any = "";
 
-  const generated = () => {
-    console.log(searchName); 
-  };
+  const capitalized = (word: string): string => {
+    return word.charAt(0).toUpperCase() + word.slice(1);
+  }
+
+  const generated = async() => {
+    const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${searchName.toLowerCase()}`);
+    pokemonData = response.data;
+    console.log(pokemonData.name);
+  }
+
+  onMount(generated);
 </script>
 
 <main>
@@ -21,8 +32,10 @@
     </div>
   </section>
   <section id="image">
-    <div>
-      <p>Image Section</p>
+    <div id="image-section">
+      {#if pokemonData.name !== undefined}
+        <img src={pokemonData.sprites.front_default} alt={pokemonData.name}>   
+      {/if}
     </div>
   </section>
   <section id="generator">
@@ -56,6 +69,15 @@
 
   #gen-button:active {
     transform: scale(0.95);
+  }
+
+  #image-section {
+    margin: 10px auto;
+  }
+
+  img {
+    width: 30%;
+    height: 30%;
   }
 
   input {
