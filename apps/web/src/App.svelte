@@ -9,9 +9,14 @@
   }
 
   const generated = async() => {
-    const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${searchName.toLowerCase()}`);
-    pokemonData = response.data;
-    console.log(pokemonData.name);
+    try {
+      const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${searchName.toLowerCase()}`);
+      pokemonData = response.data;
+      console.log(pokemonData.name);
+    } catch(err) {
+      console.error(err);
+      pokemonData = "Not Found";
+    }
   }
 
   onMount(generated);
@@ -35,6 +40,8 @@
     <div id="image-section">
       {#if pokemonData.name !== undefined}
         <img src={pokemonData.sprites.front_default} alt={pokemonData.name}>   
+      {:else if pokemonData === "Not Found"}
+        <p>Not Found Pokemon that you've searched.</p> 
       {/if}
     </div>
   </section>
