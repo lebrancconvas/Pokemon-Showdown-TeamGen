@@ -47,14 +47,20 @@
       {:else if loading === true}
         <p>Loading...</p>  
       {:else if pokemonData === "Not Found"}
-        <p>Not Found Pokemon that you've searched.</p> 
+        <p>Don't Found the Pokemon that you've searched.</p> 
       {/if}
     </div>
   </section>
   <section id="generator">
-    <div id="gen-button" on:click={generated}>
-      Generated       
-    </div>
+    {#if searchName !== ""}
+      <div id="gen-button" on:click={generated}>
+        Generated       
+      </div>
+    {:else}
+      <div id="gen-button">
+        Generated
+      </div>
+    {/if}
   </section>
   <footer>
 
