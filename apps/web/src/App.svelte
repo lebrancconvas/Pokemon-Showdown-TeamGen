@@ -3,6 +3,7 @@
   import axios from 'axios';
   let searchName = "";
   let pokemonData: any = "";
+  let loading = false;
 
   const capitalized = (word: string): string => {
     return word.charAt(0).toUpperCase() + word.slice(1);
@@ -10,10 +11,13 @@
 
   const generated = async() => {
     try {
+      loading = true;
       const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${searchName.toLowerCase()}`);
       pokemonData = response.data;
+      loading = false;
       console.log(pokemonData.name);
     } catch(err) {
+      loading = false;
       console.error(err);
       pokemonData = "Not Found";
     }
@@ -39,7 +43,9 @@
   <section id="image">
     <div id="image-section">
       {#if pokemonData.name !== undefined}
-        <img src={pokemonData.sprites.front_default} alt={pokemonData.name}>   
+        <img src={pokemonData.sprites.front_default} alt={pokemonData.name}>  
+      {:else if loading === true}
+        <p>Loading...</p>  
       {:else if pokemonData === "Not Found"}
         <p>Not Found Pokemon that you've searched.</p> 
       {/if}
