@@ -29,10 +29,10 @@
 <main>
   <header>
     <div>
-      <h1>Pokemon Showdown Team Generator</h1>
+      <h1>Pokemon Search</h1>
     </div>
     <div>
-      <h3>Generated the perfect team for your Pokemon Battle</h3>
+      <h3>Search your favorite Pokemon</h3> 
     </div>
   </header>
   <section id="search">
@@ -44,6 +44,9 @@
     <div id="image-section">
       {#if pokemonData.name !== undefined}
         <img src={pokemonData.sprites.front_default} alt={pokemonData.name}>  
+        <div id="details-button">
+          Details
+        </div>
       {:else if loading === true}
         <p>Loading...</p>  
       {:else if pokemonData === "Not Found"}
@@ -87,6 +90,23 @@
   }
 
   #gen-button:active {
+    transform: scale(0.95);
+  }
+
+  #details-button {
+    padding: 10px;
+    width: 10%;
+    background-color: rgb(233, 163, 33);
+    margin: 0 auto;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+
+  #details-button:hover {
+    background-color: rgb(247, 208, 68);
+  }
+
+  #details-button:active {
     transform: scale(0.95);
   }
 
